@@ -14,6 +14,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
+import it.gmariotti.cardslib.library.view.CardViewNative;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -23,27 +24,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initCards(R.id.card_list);
-        initCards(R.id.card_list_2);
+        initCard(R.id.card_1);
+        initCard(R.id.card_2);
     }
 
-    private void initCards(int viewId) {
-        ArrayList<Card> cards = createExampleCards();
-
-        CardArrayRecyclerViewAdapter mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, cards);
-        CardRecyclerView mRecyclerView = (CardRecyclerView) findViewById(viewId);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //Set the empty view
-        if (mRecyclerView != null) {
-            mRecyclerView.setAdapter(mCardArrayAdapter);
-        }
-    }
-
-    private ArrayList<Card> createExampleCards() {
-        ArrayList<Card> cards = new ArrayList<Card>();
-
+    private void initCard(int viewId) {
         Card card = new Card(this);
         CardHeader header = new CardHeader(this);
         card.addCardHeader(header);
@@ -53,10 +38,10 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this, "Hallo", Toast.LENGTH_SHORT).show();
             }
         });
-        cards.add(card);
-        return cards;
-    }
 
+        CardViewNative cardView = (CardViewNative) findViewById(viewId);
+        cardView.setCard(card);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
